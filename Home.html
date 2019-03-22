@@ -1,0 +1,156 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Toolbox</title>
+  <link rel="stylesheet" href="toolbox.css">
+</head>
+
+<body>
+  <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+  <script src="colorPicker/palette-color-picker.js"></script>
+  <script src="colorPicker/ready.js"></script>
+  <script>
+	$(function(){
+		var selectedElement;
+		var elementId = 1;
+		
+		$("#toolBox").draggable();
+		$("#properties").draggable();
+		
+		//Add text function
+		$("#textCreate").click(function(){
+			elementId++;
+			var elementName = "draggableText" + elementId;
+			var hashedElementName = "#"+elementName
+			
+			$("body").append("<text id="+elementName+">Add text here</ext>");
+			$(hashedElementName).draggable();
+			
+			$(hashedElementName).dblclick(function(){
+				var textAdded = prompt("Please enter your text", "Add text here");
+				if (textAdded != null){
+					$(hashedElementName).text(textAdded)
+				}
+			});
+						
+			$(hashedElementName).click(function(){
+				selectedElement = this;
+				size = $(selectedElement).css( "font-size" );
+				size = parseInt(size, 10);
+				$('#fontSize').val(size);
+			});
+		});
+		
+		//Create a container
+		$("#createContainerElement").click(function(){
+			elementId++;
+			var elementName = "draggableContainer" + elementId;
+			var hashedElementName = "#"+elementName
+			
+			$("body").append("<div contenteditable=\"true\" class=\"dynamicContainer\" id="+elementName+"></div>");
+			$(hashedElementName).resizable();
+			$(hashedElementName).draggable();
+			
+			$(hashedElementName).click(function(){
+				selectedElement = this;
+			});
+		});
+		
+		//Delete selected element
+		$("#deleteElement").click(function(){
+			$(selectedElement).remove();
+		});
+		
+		//Change font size function
+		$("#saveFontSize").click(function(){
+			size = $('#fontSize').val();
+			size = parseInt(size, 10);
+			$(selectedElement).css("font-size", size);
+		});
+		
+		//Change font weight function
+		$("#boldFontWeight").click(function(){
+			$(selectedElement).css("font-weight", "bold");
+		});
+		
+		//Change font weight function
+		$("#normalFontWeight").click(function(){
+			$(selectedElement).css("font-weight", "normal");
+		});
+		
+		//Change font style function
+		$("#italicFontStyle").click(function(){
+			$(selectedElement).css("font-style", "italic");
+		});
+		
+		//Change font style function
+		$("#normalFontStyle").click(function(){
+			$(selectedElement).css("font-style", "normal");
+		});
+		
+		$("#redSlider").click(function(){
+			var r = $("#redSlider").val()
+			var g = $("#greenSlider").val()
+			var b = $("#blueSlider").val()
+			$("#sliderColorPicker").css("background-color", "rgba("+r+", "+g+", "+b+", 1)");
+		});
+		
+		$("#greenSlider").click(function(){
+			var r = $("#redSlider").val()
+			var g = $("#greenSlider").val()
+			var b = $("#blueSlider").val()
+			$("#sliderColorPicker").css("background-color", "rgba("+r+", "+g+", "+b+", 1)");
+		});
+		
+		$("#blueSlider").click(function(){
+			var r = $("#redSlider").val()
+			var g = $("#greenSlider").val()
+			var b = $("#blueSlider").val()
+			$("#sliderColorPicker").css("background-color", "rgba("+r+", "+g+", "+b+", 1)");
+		});
+		
+		$("#applyColor").click(function(){
+			var color = $("#sliderColorPicker").css("background-color");
+			$(selectedElement).css("color", color);
+		});
+	});
+  </script>	
+  <div id="toolBox" Style="width:59px; height:190px; background:Gray; border: 1px solid black; border-radius: 2px;">
+	<div Style="width:100%; height:10px; background:Black;">
+	</div>
+		
+	<div Style="height: 100%; width: 100%; display: inline-block; margin-top: 3px;">
+		<button Style="width: 25px; height: 25px; margin-left: 3px; background: url(Cursor.png); background-size:cover; border: none; border-radius: 3px;"/>
+		<button id="textCreate" Style="width: 25px; height: 25px; margin-left: 3px; background: url(Text.png); background-size:cover; border: none; border-radius: 3px;"/>
+		<button Style="width: 25px; height: 25px; margin-left: 3px; background: url(Background.png); background-size:cover; border: none; border-radius: 3px;"/>
+		<button id="deleteElement" Style="width: 25px; height: 25px; margin-left: 3px; background: url(Delete.png); background-size:cover; border: none; border-radius: 3px;"/>
+		<button id="createContainerElement" Style="width: 25px; height: 25px; margin-left: 3px; background: url(Brush.png); background-size:cover; border: none; border-radius: 3px;"/>
+	</div>
+  </div>
+  
+  
+  <div id="properties" Style="width:200px; height:inherit; background:Gray; border: 1px solid black; border-radius: 2px;">
+	<div Style="width:100%; height:10px; background:Black;">
+	</div>
+		
+	<div Style="height: 100%; width: 100%; display: inline-block; margin-top: 3px; padding: 3px;">
+		<div>
+			<Text>Font Size: </Text>
+			<Input id="fontSize" Style="width: 50px;"></Input>
+			<Button id="saveFontSize">Apply</Button>
+			<Button Style="border: 1px solid white; border-radius: 3px; margin: 2px;" id="normalFontStyle">Normal Style</Button>
+			<Button Style="width: 25px; height: 25px; background: url(italicicon.svg); background-size:cover; border: 1px solid white; border-radius: 3px;" id="italicFontStyle"></Button>
+			<Button Style="width: 25px; height: 25px; background: url(boldicon.svg); background-size:cover; border: 1px solid white; border-radius: 3px;" id="boldFontWeight"></Button>
+			<Button Style="border: 1px solid white; border-radius: 3px; margin: 2px;" id="normalFontWeight">Normal Weight</Button>
+			<input id="redSlider" type="range" min="1" max="255" value="1" class="slider" id="redSlider"></input>
+			<input id="greenSlider" type="range" min="1" max="255" value="1" class="slider" id="greenSlider"></input>
+			<input id="blueSlider" type="range" min="1" max="255" value="1" class="slider" id="blueSlider"></input>
+			<div id="sliderColorPicker" class="sliderColorPicker"></div>
+			<button class="applyButton" id="applyColor">Apply</button>
+		</div>
+	</div>
+  </div>
+</body>
+</html>

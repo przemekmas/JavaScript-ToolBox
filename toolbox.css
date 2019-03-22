@@ -1,0 +1,19 @@
+.slider{
+    background: #d3d3d3;
+    outline: none;
+}
+.sliderColorPicker{
+	border: 1px solid black;
+	width: 70px;
+	height: 70px;
+	display: inline-block;
+}
+.applyButton{
+	display: block;
+}
+.dynamicContainer{
+	height: 100px;
+	width: 100px;
+	background: slategray;
+	border: 1px solid #DDDDDD;
+}
